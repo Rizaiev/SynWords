@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="Twitter">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="bootstrap-3.2.0/dist/css/bootstrap.css">
+    <link rel="stylesheet"
+          href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/ui-darkness/jquery-ui.min.css">
+    <script type="application/javascript" src="angular-1.5.7/angular.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <script type="application/javascript" src="bootstrap-3.2.0/dist/js/bootstrap.js"></script>
+    <script type="text/javascript"
+            src="App42_JAVASCRIPT_SDK-master/App42_JAVASCRIPT_SDK-master/3.1/App42-all-3.1.min.js"></script>
+</head>
+<body>
+
+<div ng-controller="Ctrl" id="myApi" class="container">
+    <h2>Synonym words</h2>
+    <autocomplete ng-enter="onEnterHashtag"></autocomplete>
+    <hr>
+    <div class="container" id="tags">
+        <hashtags value="tags"></hashtags>
+    </div>
+    <hr>
+    <button type="button" class="btn btn-primary btn-success saveBtn" ng-click=" saveWords()">save</button>
+</div>
+
+<script type="application/javascript" src="js/index.js"></script>
+<script src="js/directives/hashtags/hashtags.js"></script>
+<script src="js/directives/autocomplete/autocomplete.js"></script>
+
+</body>
+</html>
