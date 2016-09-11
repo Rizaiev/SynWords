@@ -17,6 +17,7 @@ app.directive('autocomplete', function ($http) {
                     $http.get(
                         'http://words.bighugelabs.com/api/2/f0f43ed427fdbd39f97ef8703e159796/' + scope.value + '/json'
                     ).then(function successCallback(response) {
+                        if (!response.data.noun.syn)return ;
                         angular.element(document.querySelector(".error")).css("display", "none");
                         scope.bearer = response.data.noun.syn;
                     }, function errorCallback(response) {
@@ -30,7 +31,7 @@ app.directive('autocomplete', function ($http) {
 
 
             scope.onClickHashtag = function (bar) {
-
+                if (!scope.value)return;
                 scope.value = '';
                 scope.bearer = [];
                 scope.ngEnter(bar);

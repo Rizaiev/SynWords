@@ -103,6 +103,9 @@ margin: 10px;
     width: 100%;
 
 }
+.glyphicon-remove{
+    margin-left: 5px;
+}
 .glyphicon-remove:hover {
     color: rgba(255, 168, 22, 0.97);
 }
