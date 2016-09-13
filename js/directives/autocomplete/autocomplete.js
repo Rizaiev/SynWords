@@ -1,4 +1,4 @@
-app.directive('autocomplete', function ($http) {
+app.directive('autocomplete', function ($http, StorageService) {
     return {
 
         restrict: 'E',
@@ -14,24 +14,30 @@ app.directive('autocomplete', function ($http) {
 
             scope.onChange = function () {
                 if (scope.value) {
-                    $http.get(
-                        'http://words.bighugelabs.com/api/2/f0f43ed427fdbd39f97ef8703e159796/' + scope.value + '/json'
-                    ).then(function successCallback(response) {
-                        if (!response.data.noun.syn)return ;
-                        angular.element(document.querySelector(".error")).css("display", "none");
-                        scope.bearer = response.data.noun.syn;
-                    }, function errorCallback(response) {
-                        angular.element(document.querySelector(".scroll")).css("display", "none");
-                        scope.bearer = [];
-                        scope.nonWords();
-                    });
+                    StorageService.getWords(scope.value)
+                        .success(function (response) {
+                            if (!response.noun.syn)return;
+                            angular.element(document.querySelector(".error")).css("display", "none");
+                            scope.bearer = response.noun.syn;
+                        })
+                        .error(function (response, status) {
+
+                            angular.element(document.querySelector(".scroll")).css("display", "none");
+                            scope.bearer = [];
+                            scope.nonWords();
+                            scope.ty = response.message;
+
+                        })
                 }
                 scope.hid();
             };
 
 
+
+
             scope.onClickHashtag = function (bar) {
                 if (!scope.value)return;
+
                 scope.value = '';
                 scope.bearer = [];
                 scope.ngEnter(bar);
