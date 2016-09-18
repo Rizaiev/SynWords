@@ -1,4 +1,4 @@
-app.directive('autocomplete', function ($http, StorageService) {
+app.directive('autocomplete', function ($http, WordDatabaseService) {
     return {
 
         restrict: 'E',
@@ -14,27 +14,22 @@ app.directive('autocomplete', function ($http, StorageService) {
 
             scope.onChange = function () {
                 if (scope.value) {
-                    StorageService.getWords(scope.value)
-                        .success(function (response) {
-                            if (!response.noun.syn)return;
+                    WordDatabaseService.getWords( scope.value, function (error, words) {
+                        if(words){
+                            scope.bearer = words;
                             angular.element(document.querySelector(".error")).css("display", "none");
-                            scope.bearer = response.noun.syn;
-                        })
-                        .error(function (response, status) {
-
+                        } else {
                             angular.element(document.querySelector(".scroll")).css("display", "none");
                             scope.bearer = [];
                             scope.nonWords();
-                            scope.ty = response.message;
-
-                        })
+                        }
+                        
+                    })
                 }
                 scope.hid();
             };
 
-
-
-
+            
             scope.onClickHashtag = function (bar) {
                 if (!scope.value)return;
 

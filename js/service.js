@@ -14,7 +14,6 @@ app.service('StorageService', ['$http', function ($http, $scope) {
                 var storageObj = JSON.parse(object);
                 var res = storageObj.app42.response.storage.jsonDoc;
                 var resLast = res[res.length - 1];
-                console.log(resLast.words);
 
                 cb(null, resLast.words)
             }
@@ -23,7 +22,7 @@ app.service('StorageService', ['$http', function ($http, $scope) {
     };
 
 
-    this.saveTags = function (tags, cd) {
+    this.saveTags = function (tags) {
 
         var employeeJSON = JSON.stringify({"words": tags}),
          result;
@@ -32,19 +31,30 @@ app.service('StorageService', ['$http', function ($http, $scope) {
             success: function (object) {
                 var storageObj = JSON.parse(object);
                 result = storageObj.app42.response.storage;
-                cd(result);
+                
             },
             error: function (error) {
             }
         });
     };
+    
+}]);
 
+app.service('WordDatabaseService',["$http", function ($http) {
+    
 
-    this.getWords = function (word) {
-        return $http.get('http://words.bighugelabs.com/api/2/f0f43ed427fdbd39f97ef8703e159796/' + word + '/json');
+    this.getWords = function (word, cb) {
+        return $http.get('http://words.bighugelabs.com/api/2/f0f43ed427fdbd39f97ef8703e159796/' + word + '/json')
+            .success(function (response) {
+                
+                var bearer = response.noun.syn;
+                cb(null, bearer);
+            })
+            .error(function (response) {
+                cb(response, null)
+            });
     };
 
-
-}]);
+}])
 
 
