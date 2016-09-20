@@ -1,6 +1,6 @@
 var app = angular.module('Twitter', []);
 
-app.controller('Ctrl', function ($scope, $http, StorageService) {
+app.controller('Ctrl', function ($scope, StorageService) {
 
     $scope.tags = [];
 

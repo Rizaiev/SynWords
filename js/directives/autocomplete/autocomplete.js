@@ -14,22 +14,21 @@ app.directive('autocomplete', function ($http, WordDatabaseService) {
 
             scope.onChange = function () {
                 if (scope.value) {
-                    WordDatabaseService.getWords( scope.value, function (error, words) {
-                        if(words){
+                    WordDatabaseService.getWords(scope.value, function (error, words) {
+                        if (words) {
                             scope.bearer = words;
+                            angular.element(document.querySelector(".scroll")).css("display", "inline-block");
                             angular.element(document.querySelector(".error")).css("display", "none");
                         } else {
                             angular.element(document.querySelector(".scroll")).css("display", "none");
                             scope.bearer = [];
                             scope.nonWords();
                         }
-                        
                     })
                 }
-                scope.hid();
+                angular.element(document.querySelector(".scroll")).css("display", "none");
             };
 
-            
             scope.onClickHashtag = function (bar) {
                 if (!scope.value)return;
 

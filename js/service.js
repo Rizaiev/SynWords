@@ -25,28 +25,28 @@ app.service('StorageService', ['$http', function ($http, $scope) {
     this.saveTags = function (tags) {
 
         var employeeJSON = JSON.stringify({"words": tags}),
-         result;
+            result;
 
         storageService.insertJSONDocument(dbName, collectionName, employeeJSON, {
             success: function (object) {
                 var storageObj = JSON.parse(object);
                 result = storageObj.app42.response.storage;
-                
+
             },
             error: function (error) {
             }
         });
     };
-    
+
 }]);
 
-app.service('WordDatabaseService',["$http", function ($http) {
-    
+app.service('WordDatabaseService', ["$http", function ($http) {
+
 
     this.getWords = function (word, cb) {
         return $http.get('http://words.bighugelabs.com/api/2/f0f43ed427fdbd39f97ef8703e159796/' + word + '/json')
             .success(function (response) {
-                
+
                 var bearer = response.noun.syn;
                 cb(null, bearer);
             })
@@ -55,6 +55,6 @@ app.service('WordDatabaseService',["$http", function ($http) {
             });
     };
 
-}])
+}]);
 
 
